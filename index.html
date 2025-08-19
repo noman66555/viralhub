@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="pageTitle">Viral Video</title>
+
+  <link rel="icon" href="https://i.postimg.cc/kG8f4YrF/5540505.png" type="image/png" />
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #FFEAD8;
+      margin: 0;
+      padding-top: 60px;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode .fixed-header {
+      background-color: #333;
+      box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+    }
+    body.dark-mode .fixed-header a {
+      color: #e0e0e0;
+    }
+    body.dark-mode .notice-box {
+      background-color: #2c2c2c;
+      border-color: #444;
+      color: #e0e0e0;
+    }
+    body.dark-mode .click-play-box {
+      background-color: #388E3C;
+      border-color: #2e7d32;
+      color: #e0e0e0;
+    }
+    body.dark-mode .premium-box {
+      background: linear-gradient(135deg, #4b4b4b, #2c2c2c);
+      color: #FFD700;
+      border-color: #FFD700;
+      box-shadow: 0 8px 15px rgba(255,255,255,0.1);
+    }
+    body.dark-mode .premium-box .telegram-btn {
+      background-color: #0088CC;
+    }
+    body.dark-mode .video-container {
+      background-color: #2c2c2c;
+      box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+    }
+    body.dark-mode .video-part {
+      background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+      border: 2px solid #555;
+      box-shadow: 0 8px 15px rgba(255,255,255,0.1);
+    }
+    body.dark-mode .video-part-title {
+      color: #FFD700;
+    }
+    body.dark-mode .thumb {
+      background-color: #2c2c2c;
+      box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+      color: #e0e0e0;
+    }
+    body.dark-mode .thumb-title {
+      color: #e0e0e0;
+    }
+    body.dark-mode .thumb-views {
+      color: #bbb;
+    }
+    body.dark-mode .page-btn {
+      background-color: #444;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+    body.dark-mode .page-btn.active {
+      background-color: #ffaf70;
+      border-color: #ffaf70;
+    }
+    body.dark-mode .video-description-section {
+      border-top-color: #444;
+    }
+    body.dark-mode .social-share a {
+      box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+    }
+    body.dark-mode .social-share a:hover {
+      box-shadow: 0 6px 12px rgba(255,255,255,0.15);
+    }
+    body.dark-mode .social-share-section h4 {
+        color: #FFD700;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    body.dark-mode .dark-mode-toggle {
+      background: #121212;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      border-color: #ffc107;
+    }
+    body.dark-mode .dark-mode-toggle svg {
+      fill: #ffc107;
+    }
+
+
+    .fixed-header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background-color: #ffaf70;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .fixed-header a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 0 10px;
+    }
+    .fixed-header a:hover {
+      text-decoration: underline;
+    }
+    .hamburger-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 25px;
+      position: absolute;
+      left: 15px;
+    }
+    .hamburger-btn .line {
+      width: 100%;
+      height: 3px;
+      background-color: #fff;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .header-title-wrapper {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      height: 50%;
+      width: 250px;
+      position: fixed;
+      z-index: 1001;
+      top: 0;
+      left: -250px; /* Hidden by default */
+      background-color: #fff;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 70px;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+      border-radius: 0 0 15px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sidebar.open {
+      left: 0; /* Visible when open */
+    }
+    .sidebar.dark-mode {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      box-shadow: 4px 0 10px rgba(255,255,255,0.1);
+    }
+    .sidebar .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 30px;
+      text-decoration: none;
+      color: #333;
+      transition: color 0.3s;
+    }
+    .sidebar.dark-mode .close-btn {
+      color: #e0e0e0;
+    }
+    .sidebar-content {
+      padding: 20px;
+    }
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f0f0f0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: background-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .sidebar.dark-mode .sidebar-item {
+      background-color: #2c2c2c;
+      box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+    }
+    .sidebar-item:hover {
+      background-color: #e0e0e0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .sidebar.dark-mode .sidebar-item:hover {
+      background-color: #383838;
+      box-shadow: 0 4px 8px rgba(255,255,255,0.15);
+    }
+    .sidebar-item label {
+      font-size: 16px;
+      color: #555;
+    }
+    .sidebar.dark-mode .sidebar-item label {
+      color: #e0e0e0;
+    }
+    .sidebar-item .dark-mode-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .sidebar-item .dark-mode-toggle svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffaf70;
+    }
+    .content-wrapper {
+      padding: 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .notice-box {
+      background-color: #ffaf70;
+      border: 2px solid #ff8c42;
+      color: #fff;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 8px;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      font-weight: bold;
+    }
+    .notice-box p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .click-play-box {
+      background-color: #4CAF50;
+      border: 2px solid #388E3C;
+      color: #fff;
+      padding: 15px;
+      margin: 10px auto 30px auto;
+      border-radius: 8px;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 44px 10px rgba(0,0,0,0.15);
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .click-play-box p {
+      margin: 0;
+    }
+
+    /* New Premium Box Styles */
+    .premium-box {
+      background: linear-gradient(135deg, #FFD700, #DAA520);
+      color: #4B0082;
+      padding: 20px;
+      margin: 80px auto 30px auto;
+      border-radius: 12px;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.25);
+      font-weight: bold;
+      border: 3px solid #FFC107;
+      animation: glowing-border 2s infinite alternate;
+    }
+    .premium-box h3 {
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .premium-box p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .premium-box .telegram-btn {
+      display: inline-block;
+      background-color: #0088CC;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .premium-box .telegram-btn:hover {
+      background-color: #0077b5;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+    @keyframes glowing-border {
+      from { border-color: #FFC107; }
+      to { border-color: #FFECB3; }
+    }
+    .premium-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 0 10px;
+    }
+    /* Video container styling when it's full-width */
+    .content-wrapper.full-width .video-container {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background-color: #FFEAD8; /* Match body background */
+    }
+
+    body.dark-mode .content-wrapper.full-width .video-container {
+      background-color: #121212; /* Match dark mode body background */
+    }
+
+    /* Keep the default video-container styling for mobile when not in full width view */
+    .video-container {
+      max-width: 960px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: none;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background-color: #000;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .video-title {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    /* Hide video title on the video player page */
+    body.show-video-view .video-title {
+        display: none;
+    }
+
+    .video-description-section {
+      margin-top: 15px;
+      padding-bottom: 15px;
+      border-top: 1px solid #eee;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    body.dark-mode .video-description-section {
+      border-top-color: #444;
+    }
+    .video-description-section h4 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #555;
+    }
+    body.dark-mode .video-description-section h4 {
+      color: #e0e0e0;
+    }
+    .video-description-section p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #444;
+      white-space: pre-wrap;
+    }
+    body.dark-mode .video-description-section p {
+        color: #e0e0e0;
+    }
+
+    /* Social Share Section is removed from here */
+    .social-share-section {
+        display: none;
+    }
+
+    .suggestions-heading {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #333;
+      display: none;
+    }
+    .suggestions-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      justify-content: center;
+      display: none;
+    }
+    .thumb {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+    .thumb-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      background-color: #00000010;
+    }
+    .thumb.suggestion-thumb .thumb-img {
+      height: 120px;
+      object-fit: cover;
+    }
+    .thumb-title {
+      padding: 10px 12px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+      white-space: normal;
+      overflow: visible;
+    }
+    .thumb-views {
+      padding: 5px 12px 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 20px;
+    }
+    .page-btn {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .page-btn.active {
+      background-color: #ffaf70;
+      color: #fff;
+      border-color: #ffaf70;
+    }
+
+    .video-part {
+        background: linear-gradient(145deg, #f0f0f0, #ffffff);
+        border: 2px solid #ffc107;
+        border-radius: 12px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+        padding: 20px;
+        margin-bottom: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+    .video-part:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        border-color: #ff8c42;
+    }
+    .video-part-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-align: center;
+        color: #DAA520;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    /* Hide premium box from video player and main gallery */
+    .premium-box-for-main-page {
+        display: none !important;
+    }
+    #mainGalleryView .premium-box {
+        display: none;
+    }
+    body.show-video-view .premium-box {
+        display: block !important;
+        margin-top: 30px;
+    }
+
+    /* Like Button styles */
+    #likeButtonContainer {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .like-button {
+        background-color: #E0E0E0;
+        color: #555;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    body.dark-mode .like-button {
+        background-color: #333;
+        color: #e0e0e0;
+    }
+    .like-button:hover {
+        background-color: #ffaf70;
+        color: #fff;
+    }
+    .like-button.liked {
+        background-color: #ffaf70;
+        color: #fff;
+    }
+    body.dark-mode .like-button.liked {
+        background-color: #ffaf70;
+        color: #fff;
+    }
+    .like-button svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
+
+    /* Ad Container Styling */
+    .ad-container {
+      margin: 20px auto;
+      text-align: center;
+    }
+    
+    /* Premium Page View Styles */
+    .premium-page-view {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #FFEAD8;
+        z-index: 999;
+        display: none; /* Initially hidden */
+        align-items: center;
+        justify-content: center;
+        padding-top: 60px;
+        box-sizing: border-box;
+    }
+    body.dark-mode .premium-page-view {
+      background-color: #121212;
+    }
+    
+    .premium-page-view .premium-box {
+        margin: 0;
+        max-width: 90%;
+        width: 480px;
+        display: block !important;
+    }
+    .premium-page-view .back-btn {
+        position: absolute;
+        top: 70px;
+        left: 20px;
+        padding: 8px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+    }
+    body.dark-mode .premium-page-view .back-btn {
+        background-color: #444;
+        border-color: #555;
+        color: #e0e0e0;
+    }
+    
+    /* History Page View */
+    .history-page-view {
+        display: none;
+        padding: 70px 10px 20px;
+        max-width: 960px;
+        margin: 0 auto;
+    }
+    .history-page-view h1 {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    .history-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 15px;
+        justify-content: center;
+    }
+    .history-item {
+        display: block; /* Changed to block for thumbnail-only layout */
+        padding: 0;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: transform 0.2s;
+        overflow: hidden;
+    }
+    body.dark-mode .history-item {
+        background-color: #2c2c2c;
+    }
+    .history-item:hover {
+        transform: scale(1.05);
+    }
+    .history-img {
+        width: 100%;
+        height: 120px; /* Adjusted height for better thumbnail look */
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    #historyMessage {
+        text-align: center;
+        margin-top: 20px;
+        color: #888;
+    }
+    .history-clear-btn {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #f44336;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .history-clear-btn:hover {
+        background-color: #d32f2f;
+    }
+    
+    /* CSS to handle body overflow when sidebar is open */
+    .body-no-scroll {
+        overflow: hidden;
+    }
+
+    @media (max-width: 480px) {
+      .gallery {
+        grid-template-columns: 1fr; /* Display one thumbnail per row */
+        gap: 20px; /* Adjusted gap for better spacing */
+        padding: 0 15px; /* Added some padding */
+      }
+      .thumb-img {
+        height: auto; /* Adjust height automatically */
+        width: 100%; /* Make image full width */
+      }
+      .thumb-title {
+        font-size: 16px;
+      }
+      .thumb-views {
+        font-size: 14px;
+      }
+      .content-wrapper {
+        padding: 0;
+      }
+      .notice-box, .click-play-box {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+    @media (min-width: 481px) {
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      .thumb-img {
+        height: 150px;
+      }
+    }
+    @media (min-width: 769px) {
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      .thumb-img {
+        height: 180px;
+      }
+    }
+    @media (min-width: 1025px) {
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+      .thumb-img {
+        height: 200px;
+      }
+      .suggestions-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      .thumb.suggestion-thumb .thumb-img {
+        height: 150px;
+      }
+    }
+
+    /* New style for zoom-text */
+    .zoom-text {
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        color: #555;
+        margin-bottom: 5px;
+    }
+    body.dark-mode .zoom-text {
+        color: #ddd;
+    }
+  </style>
+
+  <script type='text/javascript' src='//pl27200538.profitableratecpm.com/3b/2e/9a/3b2e9aba2fb0436e40c333ec96eb2c32.js'></script>
+  <script async="async" data-cfasync="false" src="//pl27200603.profitableratecpm.com/530d14cdaa3fb9a2217f2bb2b7e83deb/invoke.js"></script>
+
+  <script type="text/javascript">
+	atOptions = {
+		'key' : '1d5c0ce77b7e558442c11bce83917155',
+		'format' : 'iframe',
+		'height' : 300,
+		'width' : 160,
+		'params' : {}
+	};
+  </script>
+  <script type="text/javascript" src="//www.highperformanceformat.com/1d5c0ce77b7e558442c11bce83917155/invoke.js"></script>
+
+</head>
+<body>
+  <div class="fixed-header">
+    <button class="hamburger-btn" onclick="toggleSidebar()">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </button>
+    <div class="header-title-wrapper">
+      <a href="javascript:void(0)" onclick="showMainGallery()">Desi Viral Videos</a>
+    </div>
+  </div>
+
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+    <div class="sidebar-content">
+      <div class="sidebar-item" onclick="showPremiumPage()">
+        <label>Premium</label>
+      </div>
+      <div class="sidebar-item" onclick="showHistoryPage()">
+        <label>History</label>
+      </div>
+      <div class="sidebar-item">
+        <label>Dark Mode</label>
+        <button class="dark-mode-toggle" id="darkModeToggle">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="content-wrapper">
+    <div id="mainGalleryView">
+      <div class="notice-box">
+        <a href="https://t.me/groupseller66555?text=আমি-বাচ্চাদের-ভিডিও-কিনতে-চাই" target="_blank" style="color: inherit; text-decoration: none;">
+          <p>বাচ্চাদের ভিডিও কিনতে এই বক্সে ক্লিক করুন।</p>
+        </a>
+      </div>
+      <div class="click-play-box">
+        <p>ভিডিও দেখতে ছবিতে ক্লিক করুন → ১৫ সেকেন্ড অপেক্ষা করুন → Back দিয়ে ফিরে এসে আবার ছবিতে ক্লিক করুন → তারপর ভিডিও চলবে</p>
+      </div>
+      
+      <div class="gallery" id="gallery"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <div id="premiumPageView" class="premium-page-view">
+        <button class="back-btn" onclick="showMainGallery()">Back Button</button>
+        <div class="premium-box">
+            <img src="https://i.postimg.cc/Hn8ZQ8H9/Whats-App-Image-2025-08-07-at-17-23-44-2b19e06dewf2.jpg" alt="Premium Group Image" class="premium-image">
+            <h3>আমাদের PREMIUM গ্রুপে যোগ দিন</h3>
+            <p>আরও নতুন ভিডিও দেখতে আমাদের প্রিমিয়াম গ্রুপ কিনুন।</p>
+            <a href="https://t.me/groupseller66555" class="telegram-btn" target="_blank">
+                যোগাযোগ করতে এখানে ক্লিক করুন
+            </a>
+        </div>
+    </div>
+
+    <div id="historyPageView" class="history-page-view">
+        <h1>Recent History</h1>
+        <div id="historyList" class="history-list"></div>
+        <p id="historyMessage" style="display:none;">এখানে আপনার দেখা ভিডিওর তালিকা থাকবে।</p>
+        <button id="clearHistoryBtn" class="history-clear-btn" style="display:none;">Clear History</button>
+        <div style="text-align: center; margin-top: 20px;">
+          <button class="page-btn" onclick="showMainGallery()">Back</button>
+        </div>
+    </div>
+
+    <div id="videoPlayerView" class="video-container">
+      <h1 class="video-title" id="currentVideoTitle"></h1>
+      <div id="videoPlayersContainer"></div>
+      
+      <div class="ad-container">
+        </div>
+
+      <div class="video-description-section" id="videoDescriptionSection">
+        <h4>Description</h4>
+        <p id="videoDescriptionText"></p>
+      </div>
+      
+      <div class="premium-box">
+        <img src="https://i.postimg.cc/Hn8ZQ8H9/Whats-App-Image-2025-08-07-at-17-23-44-2b19e06dewf2.jpg" alt="Premium Group Image" class="premium-image">
+        <h3>আমাদের PREMIUM গ্রুপে যোগ দিন</h3>
+        <p>আরও নতুন ভিডিও দেখতে আমাদের প্রিমিয়াম গ্রুপ কিনুন।</p>
+        <a href="https://t.me/groupseller66555" class="telegram-btn" target="_blank">
+            যোগাযোগ করতে এখানে ক্লিক করুন
+        </a>
+      </div>
+
+      <h3 class="suggestions-heading">আরও ভিডিও দেখতে নিচে ক্লিক করো</h3>
+      <div class="suggestions-gallery" id="suggestionsGallery"></div>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="page-btn" onclick="showMainGallery()">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sheetID = "1YhisrI5iP4l6_Bo7rnJm6tr0y7rcU8YmsrbWlJTOywI";
+    const sheetName = "Sheet1";
+    const url = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
+
+    const visited = {};
+    const firstClickLink = "https://www.profitableratecpm.com/zw75uf0jz7?key=11a36a1a08b8c991eef6b05c72671298";
+    const itemsPerPage = 20;
+    let currentPage = 1;
+    let allItems = [];
+    let currentVideoPlaying = null;
+    const websiteBaseUrl = "https://viral-videoss.netlify.app/";
+
+    const mainGalleryView = document.getElementById('mainGalleryView');
+    const videoPlayerView = document.getElementById('videoPlayerView');
+    const premiumPageView = document.getElementById('premiumPageView');
+    const historyPageView = document.getElementById('historyPageView');
+    const gallery = document.getElementById("gallery");
+    const pagination = document.getElementById("pagination");
+    const currentVideoTitle = document.getElementById('currentVideoTitle');
+    const videoDescriptionSection = document.getElementById('videoDescriptionSection');
+    const videoDescriptionText = document.getElementById('videoDescriptionText');
+    const suggestionsGallery = document.getElementById('suggestionsGallery');
+    const pageTitle = document.getElementById('pageTitle');
+    const videoPlayersContainer = document.getElementById('videoPlayersContainer');
+    const body = document.body;
+    const adContainer = document.querySelector('.ad-container');
+    
+    const sidebar = document.getElementById("mySidebar");
+    const hamburgerBtn = document.querySelector('.hamburger-btn');
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const historyList = document.getElementById('historyList');
+    const historyMessage = document.getElementById('historyMessage');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+    function loadNewAd() {
+      adContainer.innerHTML = '';
+      const adScript = document.createElement('script');
+      adScript.type = 'text/javascript';
+      adScript.innerHTML = `
+        atOptions = {
+            'key' : '1d5c0ce77b7e558442c11bce83917155',
+            'format' : 'iframe',
+            'height' : 300,
+            'width' : 160,
+            'params' : {}
+        };
+      `;
+      adContainer.appendChild(adScript);
+
+      const invokeScript = document.createElement('script');
+      invokeScript.type = 'text/javascript';
+      invokeScript.src = '//www.highperformanceformat.com/1d5c0ce77b7e558442c11bce83917155/invoke.js';
+      adContainer.appendChild(invokeScript);
+    }
+    
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+    }
+
+    function toggleDarkMode() {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+        }
+        checkDarkMode();
+    }
+
+    function checkDarkMode() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            sidebar.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+            sidebar.classList.remove('dark-mode');
+        }
+    }
+
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+    
+    // Close sidebar on outside click
+    window.addEventListener('click', (event) => {
+        if (!sidebar.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+            if(sidebar.classList.contains('open')) {
+                toggleSidebar();
+            }
+        }
+    });
+
+    // New function to show premium page
+    function showPremiumPage() {
+        mainGalleryView.style.display = 'none';
+        videoPlayerView.style.display = 'none';
+        historyPageView.style.display = 'none';
+        premiumPageView.style.display = 'flex';
+        toggleSidebar();
+        body.classList.add('show-premium-view');
+        pageTitle.textContent = "Premium Group";
+        window.scrollTo(0, 0);
+        history.pushState({ view: 'premium' }, 'Premium Group', window.location.origin + window.location.pathname + '?view=premium');
+    }
+
+    // New function to show history page
+    function showHistoryPage() {
+        mainGalleryView.style.display = 'none';
+        videoPlayerView.style.display = 'none';
+        premiumPageView.style.display = 'none';
+        historyPageView.style.display = 'block';
+        toggleSidebar();
+        body.classList.add('show-history-view');
+        body.classList.remove('show-video-view', 'show-premium-view');
+        pageTitle.textContent = "History - Viral Video";
+        window.scrollTo(0, 0);
+        renderHistory();
+        history.pushState({ view: 'history' }, 'History - Viral Video', window.location.origin + window.location.pathname + '?view=history');
+    }
+
+    // Function to save viewed video to local storage, ensuring no duplicates
+    function saveToHistory(item) {
+        let history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+        const existingIndex = history.findIndex(video => video.videoUrls === item.second_link);
+
+        if (existingIndex > -1) {
+            history.splice(existingIndex, 1);
+        }
+        
+        const historyItem = {
+            title: item.title,
+            videoUrls: item.second_link,
+            imageUrl: item.image_url
+        };
+
+        history.unshift(historyItem);
+        // Limit history to a certain number, e.g., 50 videos
+        if (history.length > 50) {
+            history.pop();
+        }
+        localStorage.setItem('videoHistory', JSON.stringify(history));
+    }
+
+    // Function to render the history page
+    function renderHistory() {
+        const history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+        historyList.innerHTML = '';
+
+        if (history.length === 0) {
+            historyMessage.style.display = 'block';
+            clearHistoryBtn.style.display = 'none';
+        } else {
+            historyMessage.style.display = 'none';
+            clearHistoryBtn.style.display = 'block';
+            history.forEach(item => {
+                const historyItem = document.createElement("div");
+                historyItem.className = "thumb history-item";
+                historyItem.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.title}" class="thumb-img history-img">
+                `;
+                historyItem.addEventListener('click', () => {
+                    showVideoPlayer(item.videoUrls, item.title, item.description || '');
+                });
+                historyList.appendChild(historyItem);
+            });
+        }
+    }
+    
+    // Function to clear history
+    clearHistoryBtn.addEventListener('click', () => {
+        localStorage.removeItem('videoHistory');
+        renderHistory();
+    });
+
+    // Updated showMainGallery function to handle all page views
+    function showMainGallery(pushState = true) {
+      mainGalleryView.style.display = 'block';
+      videoPlayerView.style.display = 'none';
+      premiumPageView.style.display = 'none';
+      historyPageView.style.display = 'none';
+      body.classList.remove('show-video-view', 'show-premium-view', 'show-history-view');
+      currentVideoPlaying = null;
+      pageTitle.textContent = "Viral Video";
+      window.scrollTo(0, 0);
+      if (pushState) {
+        history.pushState({ view: 'main' }, 'Viral Video', window.location.origin + window.location.pathname);
+      }
+    }
+
+    // Updated showVideoPlayer to handle multiple videos from second_link and save to history correctly
+    function showVideoPlayer(videoUrls, title, description = '', pushState = true) {
+        mainGalleryView.style.display = 'none';
+        premiumPageView.style.display = 'none';
+        historyPageView.style.display = 'none';
+        videoPlayerView.style.display = 'block';
+        body.classList.add('show-video-view');
+        body.classList.remove('show-premium-view', 'show-history-view');
+        videoPlayersContainer.innerHTML = '';
+        currentVideoTitle.textContent = title;
+        videoDescriptionText.textContent = description;
+        
+        const urlsArray = typeof videoUrls === 'string' ? videoUrls.split(',').map(url => url.trim()) : [videoUrls];
+
+        if (urlsArray.length > 0) {
+            urlsArray.forEach((url, index) => {
+                const partContainer = document.createElement('div');
+                partContainer.className = 'video-part';
+
+                const zoomText = document.createElement('div');
+                zoomText.className = 'zoom-text';
+                zoomText.textContent = 'জুম করে ভিডিও উপভোগ করুন';
+                
+                const partTitle = document.createElement('h3');
+                partTitle.className = 'video-part-title';
+                partTitle.textContent = `Part ${index + 1}`;
+
+                const videoWrapper = document.createElement('div');
+                videoWrapper.className = 'video-wrapper';
+
+                const iframe = document.createElement('iframe');
+                iframe.src = url;
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                iframe.setAttribute('allowfullscreen', '');
+
+                videoWrapper.appendChild(iframe);
+                partContainer.appendChild(zoomText);
+                partContainer.appendChild(partTitle);
+                partContainer.appendChild(videoWrapper);
+                videoPlayersContainer.appendChild(partContainer);
+            });
+        }
+        
+        // Find the full item object to save to history
+        const fullItem = allItems.find(item => item.second_link === videoUrls && item.title === title) || {
+            title: title,
+            second_link: videoUrls,
+            image_url: '', // If not found in allItems, image_url will be empty
+            description: description
+        };
+        saveToHistory(fullItem);
+
+        pageTitle.textContent = title + " - Viral Video";
+        window.scrollTo(0, 0);
+
+        if (description && description.trim() !== '') {
+            videoDescriptionSection.style.display = 'block';
+        } else {
+            videoDescriptionSection.style.display = 'none';
+        }
+
+        if (pushState) {
+            const urlParams = new URLSearchParams();
+            urlParams.set('videoUrls', videoUrls);
+            urlParams.set('title', title);
+            if (description && description.trim() !== '') {
+                urlParams.set('description', description);
+            }
+            history.pushState(
+                { view: 'video', videoUrls: videoUrls, title: title, description: description },
+                title + ' - Viral Video',
+                '?' + urlParams.toString()
+            );
+        }
+    }
+
+    // Handle thumbnail click
+    function handleThumbnailClick(item) {
+      const key = `visited_${item.title}_${item.second_link}`;
+
+      if (visited[key]) {
+        showVideoPlayer(item.second_link, item.title, item.description || '');
+      } else {
+        visited[key] = true;
+        sessionStorage.setItem(key, "true");
+        window.location.href = firstClickLink;
+      }
+    }
+
+    function renderPage(page) {
+      gallery.innerHTML = "";
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageItems = allItems.slice(start, end);
+
+      pageItems.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "thumb";
+
+        const img = document.createElement("img");
+        img.src = item.image_url;
+        img.alt = item.title;
+        img.className = "thumb-img";
+
+        const title = document.createElement("div");
+        title.className = "thumb-title";
+        title.textContent = item.title;
+
+        const views = document.createElement("div");
+        views.className = "thumb-views";
+        views.textContent = `👁️ ${item.views || "0"} views`;
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(views);
+
+        card.addEventListener("click", () => handleThumbnailClick(item));
+
+        const key = `visited_${item.title}_${item.second_link}`;
+        if (sessionStorage.getItem(key)) {
+          visited[key] = true;
+        }
+
+        gallery.appendChild(card);
+      });
+    }
+
+    function renderPagination(totalPages) {
+      pagination.innerHTML = "";
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.className = "page-btn";
+        if (i === currentPage) btn.classList.add("active");
+        btn.textContent = i;
+        btn.addEventListener("click", () => {
+          currentPage = i;
+          renderPage(currentPage);
+          renderPagination(totalPages);
+          window.scrollTo(0, 0);
+        });
+        pagination.appendChild(btn);
+      }
+    }
+
+    window.addEventListener('popstate', function(event) {
+      if (event.state) {
+        if (event.state.view === 'video') {
+          showVideoPlayer(event.state.videoUrls, event.state.title, event.state.description || '', false);
+        } else if (event.state.view === 'premium') {
+          showPremiumPage();
+        } else if (event.state.view === 'history') {
+          showHistoryPage();
+        } else {
+          showMainGallery(false);
+        }
+      } else {
+        showMainGallery(false);
+      }
+    });
+
+    function initGallery() {
+        const cachedData = sessionStorage.getItem('shuffledVideos');
+
+        if (cachedData) {
+            allItems = JSON.parse(cachedData);
+            const totalPages = Math.ceil(allItems.length / itemsPerPage);
+            renderPage(currentPage);
+            renderPagination(totalPages);
+        } else {
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    allItems = data.filter(item => item.image_url && item.visible.toLowerCase() === "yes");
+                    allItems = sortAndShuffleItems(allItems);
+                    sessionStorage.setItem('shuffledVideos', JSON.stringify(allItems));
+                    const totalPages = Math.ceil(allItems.length / itemsPerPage);
+                    renderPage(currentPage);
+                    renderPagination(totalPages);
+                })
+                .catch(err => {
+                    console.error("Sheet Load Error:", err);
+                    gallery.innerText = "😢 ডেটা লোড হচ্ছে না। Sheet public আছে তো?";
+                    showMainGallery(false);
+                });
+        }
+    }
+    
+    function sortAndShuffleItems(items) {
+      const priorityItems = items.filter(item => item.priority && item.priority.trim() !== "");
+      const noPriorityItems = items.filter(item => !item.priority || item.priority.trim() === "");
+      priorityItems.sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
+      shuffleArray(noPriorityItems);
+      return priorityItems.concat(noPriorityItems);
+    }
+    
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        initGallery();
+        checkDarkMode();
+
+        const params = new URLSearchParams(window.location.search);
+        const videoUrlsFromParam = params.get('videoUrls');
+        const videoTitleFromParam = params.get('title');
+        const videoDescriptionFromParam = params.get('description');
+        const viewFromParam = params.get('view');
+
+        if (viewFromParam === 'premium') {
+            showPremiumPage();
+        } else if (viewFromParam === 'history') {
+            showHistoryPage();
+        } else if (videoUrlsFromParam && videoTitleFromParam) {
+          showVideoPlayer(videoUrlsFromParam, videoTitleFromParam, videoDescriptionFromParam || '', false);
+          loadNewAd();
+        } else {
+          showMainGallery(false);
+        }
+
+        if (!params.has('videoUrls') && !params.has('view')) {
+          history.replaceState({ view: 'main' }, 'Viral Video', window.location.origin + window.location.pathname);
+        }
+    });
+  </script>
+</body>
+</html>
